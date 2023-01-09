@@ -3,3 +3,6 @@ run-dist:
 install:
 	./gradlew installDist
 run: install run-dist
+checkStyleMain:
+	./gradlew checkStyleMain
+build: checkStyleMain install
