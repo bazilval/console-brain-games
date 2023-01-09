@@ -11,17 +11,16 @@ class App {
         out.println("2 - Even");
         out.println("3 - Calculator");
         out.println("4 - GCD");
+        out.println("5 - Progression");
         out.println("0 - Exit");
         out.print("Your choice: ");
         var choice = scanner.next();
 
         switch (choice) {
             case "1" -> Engine.greetings();
-            case "2", "3", "4" -> Engine.play(choice);
+            case "2", "3", "4", "5" -> Engine.play(choice);
             default -> {
             }
         }
     }
-
-
 }

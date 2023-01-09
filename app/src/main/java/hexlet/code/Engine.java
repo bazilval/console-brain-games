@@ -3,6 +3,7 @@ package hexlet.code;
 import hexlet.code.games.Calculator;
 import hexlet.code.games.Even;
 import hexlet.code.games.GCD;
+import hexlet.code.games.Progression;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -58,6 +59,13 @@ public class Engine {
                 gameDescription = GCD.description;
                 questions = GCD.questions;
                 answers = GCD.answers;
+                break;
+            }
+            case "5": {
+                Progression.writeData(random);
+                gameDescription = Progression.description;
+                questions = Progression.questions;
+                answers = Progression.answers;
                 break;
             }
             default: {
