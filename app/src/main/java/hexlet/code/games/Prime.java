@@ -4,12 +4,15 @@ import java.util.Random;
 
 public class Prime {
     private static final int BOUND = 500;
-    public static String description = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
-    public static String[] questions = new String[3];
-    public static String[] answers = new String[3];
+    private static String description = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+    private static String[] questions;
+    private static String[] answers;
 
-    public static void writeData(Random rnd) {
-        for (int i = 0; i < 3; i++) {
+    public static void writeData(Random rnd, int attempts) {
+        questions = new String[attempts];
+        answers = new String[attempts];
+
+        for (int i = 0; i < attempts; i++) {
             int number = rnd.nextInt(BOUND);
 
             questions[i] = number + "";
@@ -20,17 +23,20 @@ public class Prime {
         if (n <= 1) {
             return false;
         }
-        if (n <= 3) {
-            return true;
-        }
-        if (n % 2 == 0 || n % 3 == 0) {
-            return false;
-        }
-        for (int i = 5; i * i <= n; i = i + 6) {
-            if (n % i == 0 || n % (i + 2) == 0) {
+        for (int i = 2; i < n / 2; i++) {
+            if (n % i == 0) {
                 return false;
             }
         }
         return true;
+    }
+    public static String getDescription() {
+        return description;
+    }
+    public static String[] getQuestions() {
+        return questions;
+    }
+    public static String[] getAnswers() {
+        return answers;
     }
 }

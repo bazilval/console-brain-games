@@ -5,12 +5,15 @@ import java.util.Random;
 public class Calculator {
     private static final int BOUND = 100;
     private static final String[] OPERATIONS = {"+", "-", "*"};
-    public static String description = "What is the result of the expression?";
-    public static String[] questions = new String[3];
-    public static String[] answers = new String[3];
+    private static String description = "What is the result of the expression?";
+    private static String[] questions;
+    private static String[] answers;
 
-    public static void writeData(Random rnd) {
-        for (int i = 0; i < 3; i++) {
+    public static void writeData(Random rnd, int attempts) {
+        questions = new String[attempts];
+        answers = new String[attempts];
+
+        for (int i = 0; i < attempts; i++) {
             int numberOne = rnd.nextInt(BOUND);
             int numberTwo = rnd.nextInt(BOUND);
             String operation = OPERATIONS[rnd.nextInt(0, 2)];
@@ -30,6 +33,15 @@ public class Calculator {
                 }
             }
         }
+    }
+    public static String getDescription() {
+        return description;
+    }
+    public static String[] getQuestions() {
+        return questions;
+    }
+    public static String[] getAnswers() {
+        return answers;
     }
 }
 

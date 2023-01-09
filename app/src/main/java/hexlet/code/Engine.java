@@ -1,27 +1,28 @@
 package hexlet.code;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.Scanner;
 import static java.lang.System.out;
 
 public class Engine {
-    public static final String[] GAMES_CLASSES = {"", "", "Even", "Calculator", "GCD", "Progression", "Prime"};
-    public static Scanner scanner = App.scanner;
-    public static Random random = new Random();
-    public static String username;
-    public static String gameDescription;
-    public static String[] questions = new String[3];
-    public static String[] answers = new String[3];
+    private static final String[] GAMES_CLASSES = {"", "", "Even", "Calculator", "GCD", "Progression", "Prime"};
+    private static Scanner scanner;
+    private static Random random = new Random();
+    private static String username;
+    private static String gameDescription;
+    private static final int ATTEMPTS = 3;
+    private static String[] questions = new String[ATTEMPTS];
+    private static String[] answers = new String[ATTEMPTS];
 
-    public static void play(String gameNum) {
+    public static void play(String gameNum, Scanner sc) {
+        scanner = sc;
         greetings();
         getGameData(gameNum);
         out.println(gameDescription);
 
         boolean isRight;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < ATTEMPTS; i++) {
             isRight = askQuestion(i);
             if (!isRight) {
                 return;
@@ -29,29 +30,32 @@ public class Engine {
         }
         out.printf("Congratulations, %s!%n", username);
     }
-    public static void greetings() {
+    public static void greetings(Scanner sc) {
         out.println("\nWelcome to the Brain Games!");
         out.print("May I have your name? ");
 
-        username = scanner.next();
+        username = sc.next();
         out.printf("Hello, %s!%n", username);
+    }
+    public static void greetings() {
+        greetings(scanner);
     }
     private static void getGameData(String gameNum) {
         var num = Integer.parseInt(gameNum);
         var gameClassName = GAMES_CLASSES[num];
         try {
             var gameClass = Class.forName("hexlet.code.games." + gameClassName);
-            Method writeData = gameClass.getDeclaredMethod("writeData", random.getClass());
-            writeData.invoke(null, random);
+            Method writeData = gameClass.getDeclaredMethod("writeData", random.getClass(), int.class);
+            writeData.invoke(null, random, ATTEMPTS);
 
-            Field descriptionField = gameClass.getField("description");
-            gameDescription = (String) descriptionField.get(null);
+            Method getDescription = gameClass.getDeclaredMethod("getDescription");
+            gameDescription = (String) getDescription.invoke(null);
 
-            Field questionsField = gameClass.getField("questions");
-            questions = (String[]) questionsField.get(null);
+            Method getQuestions = gameClass.getDeclaredMethod("getQuestions");
+            questions = (String[]) getQuestions.invoke(null);
 
-            Field answersField = gameClass.getField("answers");
-            answers = (String[]) answersField.get(null);
+            Method getAnswers = gameClass.getDeclaredMethod("getAnswers");
+            answers = (String[]) getAnswers.invoke(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
