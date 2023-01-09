@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.games.Calculator;
 import hexlet.code.games.Even;
+import hexlet.code.games.GCD;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -50,6 +51,13 @@ public class Engine {
                 gameDescription = Calculator.description;
                 questions = Calculator.questions;
                 answers = Calculator.answers;
+                break;
+            }
+            case "4": {
+                GCD.writeData(random);
+                gameDescription = GCD.description;
+                questions = GCD.questions;
+                answers = GCD.answers;
                 break;
             }
             default: {
