@@ -1,9 +1,10 @@
 package hexlet.code;
 
-import hexlet.code.games.Calculator;
 import hexlet.code.games.Even;
+import hexlet.code.games.Calculator;
 import hexlet.code.games.GCD;
 import hexlet.code.games.Progression;
+import hexlet.code.games.Prime;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -66,6 +67,13 @@ public class Engine {
                 gameDescription = Progression.description;
                 questions = Progression.questions;
                 answers = Progression.answers;
+                break;
+            }
+            case "6": {
+                Prime.writeData(random);
+                gameDescription = Prime.description;
+                questions = Prime.questions;
+                answers = Prime.answers;
                 break;
             }
             default: {
