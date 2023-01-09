@@ -1,16 +1,13 @@
 package hexlet.code;
 
-import hexlet.code.games.Even;
-import hexlet.code.games.Calculator;
-import hexlet.code.games.GCD;
-import hexlet.code.games.Progression;
-import hexlet.code.games.Prime;
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.Scanner;
 import static java.lang.System.out;
 
 public class Engine {
+    public static final String[] GAMES_CLASSES = {"", "", "Even", "Calculator", "GCD", "Progression", "Prime"};
     public static Scanner scanner = App.scanner;
     public static Random random = new Random();
     public static String username;
@@ -40,44 +37,23 @@ public class Engine {
         out.printf("Hello, %s!%n", username);
     }
     private static void getGameData(String gameNum) {
-        switch (gameNum) {
-            case "2": {
-                Even.writeData(random);
-                gameDescription = Even.description;
-                questions = Even.questions;
-                answers = Even.answers;
-                break;
-            }
-            case "3": {
-                Calculator.writeData(random);
-                gameDescription = Calculator.description;
-                questions = Calculator.questions;
-                answers = Calculator.answers;
-                break;
-            }
-            case "4": {
-                GCD.writeData(random);
-                gameDescription = GCD.description;
-                questions = GCD.questions;
-                answers = GCD.answers;
-                break;
-            }
-            case "5": {
-                Progression.writeData(random);
-                gameDescription = Progression.description;
-                questions = Progression.questions;
-                answers = Progression.answers;
-                break;
-            }
-            case "6": {
-                Prime.writeData(random);
-                gameDescription = Prime.description;
-                questions = Prime.questions;
-                answers = Prime.answers;
-                break;
-            }
-            default: {
-            }
+        var num = Integer.parseInt(gameNum);
+        var gameClassName = GAMES_CLASSES[num];
+        try {
+            var gameClass = Class.forName("hexlet.code.games." + gameClassName);
+            Method writeData = gameClass.getDeclaredMethod("writeData", random.getClass());
+            writeData.invoke(null, random);
+
+            Field descriptionField = gameClass.getField("description");
+            gameDescription = (String) descriptionField.get(null);
+
+            Field questionsField = gameClass.getField("questions");
+            questions = (String[]) questionsField.get(null);
+
+            Field answersField = gameClass.getField("answers");
+            answers = (String[]) answersField.get(null);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     private static boolean askQuestion(int questionNum) {
