@@ -9,5 +9,6 @@ class Cli {
         System.out.print("May I have your name? ");
         var username = sc.next();
         System.out.println(String.format("Hello, %s!", username));
+        sc.close();
     }
 }

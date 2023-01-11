@@ -1,17 +1,16 @@
 package hexlet.code.games;
 
+import hexlet.code.Engine;
 import java.util.Random;
 
 public class Calculator {
+    private static final String DESCRIPTION = "What is the result of the expression?";
     private static final int BOUND = 100;
     private static final String[] OPERATIONS = {"+", "-", "*"};
-    private static String description = "What is the result of the expression?";
-    private static String[] questions;
-    private static String[] answers;
 
-    public static void writeData(Random rnd, int attempts) {
-        questions = new String[attempts];
-        answers = new String[attempts];
+    public static void init(Random rnd, int attempts) {
+        var questions = new String[attempts];
+        var answers = new String[attempts];
 
         for (int i = 0; i < attempts; i++) {
             int numberOne = rnd.nextInt(BOUND);
@@ -19,29 +18,29 @@ public class Calculator {
             String operation = OPERATIONS[rnd.nextInt(0, 2)];
 
             questions[i] = String.format("%d %s %d", numberOne, operation, numberTwo);
-            switch (operation) {
-                case "+" -> {
-                    answers[i] = String.valueOf(numberOne + numberTwo);
-                }
-                case "-" -> {
-                    answers[i] = String.valueOf(numberOne - numberTwo);
-                }
-                case "*" -> {
-                    answers[i] = String.valueOf(numberOne * numberTwo);
-                }
-                default -> {
-                }
+            answers[i] = calculate(numberOne, numberTwo, operation);
+        }
+
+        Engine.play(DESCRIPTION, questions, answers);
+    }
+    private static String calculate(int numberOne, int numberTwo, String operation) {
+        String result = "";
+
+        switch (operation) {
+            case "+" -> {
+                result = String.valueOf(numberOne + numberTwo);
+            }
+            case "-" -> {
+                result = String.valueOf(numberOne - numberTwo);
+            }
+            case "*" -> {
+                result = String.valueOf(numberOne * numberTwo);
+            }
+            default -> {
             }
         }
-    }
-    public static String getDescription() {
-        return description;
-    }
-    public static String[] getQuestions() {
-        return questions;
-    }
-    public static String[] getAnswers() {
-        return answers;
+
+        return result;
     }
 }
 
