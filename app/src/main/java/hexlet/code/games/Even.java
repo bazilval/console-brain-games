@@ -7,19 +7,23 @@ public class Even {
     private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
     private static final int BOUND = 1000;
 
-    public static void init(Random rnd, int attempts) {
-        var questions = new String[attempts];
-        var answers = new String[attempts];
+    public static void startGame() {
+        var attempts = Engine.ATTEMPTS;
+        var rnd = new Random();
+        var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
             int number = rnd.nextInt(BOUND);
             var answer = isEven(number) ? "yes" : "no";
 
-            questions[i] = number + "";
-            answers[i] = answer;
+            var questionAndAnswer = new String[2];
+            questionAndAnswer[0] = number + "";
+            questionAndAnswer[1] = answer;
+
+            questionsAndAnswers[i] = questionAndAnswer;
         }
 
-        Engine.play(DESCRIPTION, questions, answers);
+        Engine.play(DESCRIPTION, questionsAndAnswers);
     }
     private static boolean isEven(int num) {
         return num % 2 == 0;

@@ -11,35 +11,47 @@ public class Progression {
     private static final int LENGTH_BOUND = 10;
     private static final String DESCRIPTION = "What number is missing in the progression?";
 
-    public static void init(Random rnd, int attempts) {
-        int startNum;
-        int delta;
-        int length;
-        int missingPos;
-        var questions = new String[attempts];
-        var answers = new String[attempts];
+    public static void startGame() {
+        var attempts = Engine.ATTEMPTS;
+        var rnd = new Random();
+        var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
-            startNum = rnd.nextInt(NUM_BOUND);
-            delta = rnd.nextInt(DELTA_ORIGIN, DELTA_BOUND);
-            length = rnd.nextInt(LENGTH_ORIGIN, LENGTH_BOUND);
-            missingPos = rnd.nextInt(0, length - 1);
+            var startNum = rnd.nextInt(NUM_BOUND);
+            var delta = rnd.nextInt(DELTA_ORIGIN, DELTA_BOUND);
+            var length = rnd.nextInt(LENGTH_ORIGIN, LENGTH_BOUND);
+            var progression = getProgression(startNum, delta, length);
+            var missingPos = rnd.nextInt(0, length - 1);
 
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int j = 0; j < length; j++) {
-                int num = startNum + delta * j;
-                stringBuilder.append(" ");
-                if (j == missingPos) {
-                    answers[i] = num + "";
-                    stringBuilder.append("..");
-                } else {
-                    stringBuilder.append(num);
-                }
-            }
-
-            questions[i] = stringBuilder.toString().trim();
+            questionsAndAnswers[i] = getQuestionAndAnswer(progression, missingPos);
         }
 
-        Engine.play(DESCRIPTION, questions, answers);
+        Engine.play(DESCRIPTION, questionsAndAnswers);
+    }
+    private static int[] getProgression(int start, int delta, int length) {
+        var result = new int[length];
+
+        for (int i = 0; i < length; i++) {
+            result[i] = start + delta * i;
+        }
+        return result;
+    }
+    private static String[] getQuestionAndAnswer(int[] progression, int missingPos) {
+        var stringBuilder = new StringBuilder();
+        String[] questionAndAnswer = new String[2];
+
+        for (int i = 0; i < progression.length; i++) {
+            var num = progression[i];
+            stringBuilder.append(" ");
+            if (i == missingPos) {
+                questionAndAnswer[1] = num + "";
+                stringBuilder.append("..");
+            } else {
+                stringBuilder.append(num);
+            }
+        }
+        questionAndAnswer[0] = stringBuilder.toString().trim();
+
+        return questionAndAnswer;
     }
 }

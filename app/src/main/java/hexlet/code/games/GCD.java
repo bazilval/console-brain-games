@@ -7,19 +7,23 @@ public class GCD {
     private static final int BOUND = 100;
     private static final String DESCRIPTION = "Find the greatest common divisor of given numbers.";
 
-    public static void init(Random rnd, int attempts) {
-        var questions = new String[attempts];
-        var answers = new String[attempts];
+    public static void startGame() {
+        var attempts = Engine.ATTEMPTS;
+        var rnd = new Random();
+        var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
             int numberOne = rnd.nextInt(BOUND);
             int numberTwo = rnd.nextInt(BOUND);
 
-            questions[i] = String.format("%d %d", numberOne, numberTwo);
-            answers[i] = gcd(numberOne, numberTwo) + "";
+            var questionAndAnswer = new String[2];
+            questionAndAnswer[0] = String.format("%d %d", numberOne, numberTwo);
+            questionAndAnswer[1] = gcd(numberOne, numberTwo) + "";
+
+            questionsAndAnswers[i] = questionAndAnswer;
         }
 
-        Engine.play(DESCRIPTION, questions, answers);
+        Engine.play(DESCRIPTION, questionsAndAnswers);
     }
     private static int gcd(int a, int b) {
         if (b == 0) {

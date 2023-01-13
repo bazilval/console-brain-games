@@ -7,18 +7,22 @@ public class Prime {
     private static final int BOUND = 500;
     private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
-    public static void init(Random rnd, int attempts) {
-        var questions = new String[attempts];
-        var answers = new String[attempts];
+    public static void startGame() {
+        var attempts = Engine.ATTEMPTS;
+        var rnd = new Random();
+        var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
             int number = rnd.nextInt(BOUND);
 
-            questions[i] = number + "";
-            answers[i] = isPrime(number) ? "yes" : "no";
+            var questionAndAnswer = new String[2];
+            questionAndAnswer[0] = number + "";
+            questionAndAnswer[1] = isPrime(number) ? "yes" : "no";
+
+            questionsAndAnswers[i] = questionAndAnswer;
         }
 
-        Engine.play(DESCRIPTION, questions, answers);
+        Engine.play(DESCRIPTION, questionsAndAnswers);
     }
     private static boolean isPrime(int n) {
         if (n <= 1) {

@@ -6,15 +6,15 @@ import static java.lang.System.out;
 public class Engine {
     public static final int ATTEMPTS = 3;
 
-    public static void play(String description, String[] questions, String[] answers) {
+    public static void play(String description, String[][] questionsAndAnswers) {
         Scanner scanner = new Scanner(System.in);
         var username = greetings(scanner);
 
         out.println(description);
 
         for (int i = 0; i < ATTEMPTS; i++) {
-            var question = questions[i];
-            var answer = answers[i];
+            var question = questionsAndAnswers[i][0];
+            var answer = questionsAndAnswers[i][1];
 
             out.printf("Question: %s%n", question);
             out.print("Your answer: ");
