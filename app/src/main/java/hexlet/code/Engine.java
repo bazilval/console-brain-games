@@ -1,24 +1,21 @@
 package hexlet.code;
 
-import java.util.Scanner;
 import static java.lang.System.out;
 
 public class Engine {
     public static final int ATTEMPTS = 3;
 
     public static void play(String description, String[][] questionsAndAnswers) {
-        Scanner scanner = new Scanner(System.in);
-        var username = greetings(scanner);
+        String username = greetings();
 
         out.println(description);
 
         for (int i = 0; i < ATTEMPTS; i++) {
-            var question = questionsAndAnswers[i][0];
-            var answer = questionsAndAnswers[i][1];
+            String question = questionsAndAnswers[i][0];
+            String answer = questionsAndAnswers[i][1];
 
             out.printf("Question: %s%n", question);
-            out.print("Your answer: ");
-            var userAnswer = scanner.next();
+            String userAnswer = Utils.getInput("Your answer:");
 
             var isRight = userAnswer.equals(answer);
             if (isRight) {
@@ -31,11 +28,9 @@ public class Engine {
         }
         out.printf("Congratulations, %s!%n", username);
     }
-    public static String greetings(Scanner sc) {
+    public static String greetings() {
         out.println("\nWelcome to the Brain Games!");
-        out.print("May I have your name? ");
-
-        var username = sc.next();
+        var username = Utils.getInput("May I have your name?");
         out.printf("Hello, %s!%n", username);
 
         return username;

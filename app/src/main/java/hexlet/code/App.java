@@ -5,13 +5,10 @@ import hexlet.code.games.Calculator;
 import hexlet.code.games.GCD;
 import hexlet.code.games.Progression;
 import hexlet.code.games.Prime;
-import java.util.Scanner;
 import static java.lang.System.out;
 
 class App {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         out.println("Please enter the game number and press Enter.");
         out.println("1 - Greet");
         out.println("2 - Even");
@@ -20,11 +17,11 @@ class App {
         out.println("5 - Progression");
         out.println("6 - Prime");
         out.println("0 - Exit");
-        out.print("Your choice: ");
-        var choice = scanner.next();
+
+        var choice = Utils.getInput("Your choice:");
 
         switch (choice) {
-            case "1" -> Engine.greetings(scanner);
+            case "1" -> Engine.greetings();
             case "2" -> Even.startGame();
             case "3" -> Calculator.startGame();
             case "4" -> GCD.startGame();
@@ -34,6 +31,6 @@ class App {
             }
         }
 
-        scanner.close();
+        Utils.closeScanner();
     }
 }

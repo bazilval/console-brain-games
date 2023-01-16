@@ -1,7 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import java.util.Random;
+import hexlet.code.Utils;
 
 public class Progression {
     private static final int NUM_BOUND = 100;
@@ -12,16 +12,15 @@ public class Progression {
     private static final String DESCRIPTION = "What number is missing in the progression?";
 
     public static void startGame() {
-        var attempts = Engine.ATTEMPTS;
-        var rnd = new Random();
+        int attempts = Engine.ATTEMPTS;
         var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
-            var startNum = rnd.nextInt(NUM_BOUND);
-            var delta = rnd.nextInt(DELTA_ORIGIN, DELTA_BOUND);
-            var length = rnd.nextInt(LENGTH_ORIGIN, LENGTH_BOUND);
-            var progression = getProgression(startNum, delta, length);
-            var missingPos = rnd.nextInt(0, length - 1);
+            int startNum = Utils.getRandom(NUM_BOUND);
+            int delta = Utils.getRandom(DELTA_ORIGIN, DELTA_BOUND);
+            int length = Utils.getRandom(LENGTH_ORIGIN, LENGTH_BOUND);
+            int[] progression = getProgression(startNum, delta, length);
+            int missingPos = Utils.getRandom(0, length - 1);
 
             questionsAndAnswers[i] = getQuestionAndAnswer(progression, missingPos);
         }
@@ -44,7 +43,7 @@ public class Progression {
             var num = progression[i];
             stringBuilder.append(" ");
             if (i == missingPos) {
-                questionAndAnswer[1] = num + "";
+                questionAndAnswer[1] = Integer.toString(num);
                 stringBuilder.append("..");
             } else {
                 stringBuilder.append(num);

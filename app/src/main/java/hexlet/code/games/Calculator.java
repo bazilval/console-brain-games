@@ -1,7 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import java.util.Random;
+import hexlet.code.Utils;
 
 public class Calculator {
     private static final String DESCRIPTION = "What is the result of the expression?";
@@ -9,14 +9,13 @@ public class Calculator {
     private static final String[] OPERATIONS = {"+", "-", "*"};
 
     public static void startGame() {
-        var attempts = Engine.ATTEMPTS;
-        var rnd = new Random();
+        int attempts = Engine.ATTEMPTS;
         var questionsAndAnswers = new String[attempts][];
 
         for (int i = 0; i < attempts; i++) {
-            int numberOne = rnd.nextInt(BOUND);
-            int numberTwo = rnd.nextInt(BOUND);
-            String operation = OPERATIONS[rnd.nextInt(0, 2)];
+            int numberOne = Utils.getRandom(BOUND);
+            int numberTwo = Utils.getRandom(BOUND);
+            String operation = OPERATIONS[Utils.getRandom(0, 2)];
 
             var questionAndAnswer = new String[2];
             questionAndAnswer[0] = String.format("%d %s %d", numberOne, operation, numberTwo);
